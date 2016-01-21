@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content=""></meta>
+<meta name="author" content=""></meta>
+
+
+<title>XSS Showcase</title>
+
+<!-- Bootstrap core CSS -->
+<link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/blog.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+	<div class="blog-masthead">
+		<div class="container">
+			<nav class="blog-nav">
+				<a class="blog-nav-item active" href="/">Home</a>
+				<a class="blog-nav-item" href="/unsecure/addPost">Unsecure Add Post</a>
+				<a class="blog-nav-item" href="/secure/addPost">Secure Add Post</a>
+				<a class="blog-nav-item" href="/antisamy/addPost">AntiSamy Add Post</a>
+			</nav>
+		</div>
+	</div>
+
+	<div class="container">
+
+		<div class="blog-header">
+			<h1 class="blog-title">Sample Blog</h1>
+			<p class="lead blog-description">Showcase of some XSS prevention techniques.</p>
+		</div>
+
+		<div class="row">
+
+			<div class="col-sm-8 blog-main">
+
+				<div class="blog-post" th:each="post : ${posts}">
+					<h2 class="blog-post-title" th:utext="${post.title}"></h2>
+					<p class="blog-post-meta">
+						January 1, 2014 by <a href="#">Mark</a>
+					</p>
+
+					<p th:utext="${post.text}">text</p>
+				</div>
+				<!-- /.blog-post -->
+
+			
+
+			</div>
+			<!-- /.blog-main -->
+
+			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+				<div class="sidebar-module sidebar-module-inset">
+					<h4>About</h4>
+					<p>This sample should demonstrate the prevention of XSS.</p>
+					<p>
+						The following sample can be used:
+						<code>&lt;script&gt;alert(document.cookie);&lt;/script&gt;</code>
+					</p>
+				</div>
+
+				<div class="sidebar-module">
+					<h4>Links</h4>
+					<ol class="list-unstyled">
+						<li><a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project">OWASP Top 10</a></li>
+						<li><a href="https://www.owasp.org/index.php/Category:OWASP_AntiSamy_Project">AntiSamy</a></li>
+						<li><a href="http://projects.spring.io/spring-boot/">Spring Boot</a></li>
+					</ol>
+				</div>
+			</div>
+			<!-- /.blog-sidebar -->
+
+		</div>
+		<!-- /.row -->
+
+	</div>
+	<!-- /.container -->
+
+	<footer class="blog-footer">
+		<p>
+			Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.
+		</p>
+		<p>
+			<a href="#">Back to top</a>
+		</p>
+	</footer>
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/1.12.0/jquery.min.js"></script>
+
+	<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</body>
+</html>

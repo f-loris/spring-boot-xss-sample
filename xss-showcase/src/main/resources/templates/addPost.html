@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content=""></meta>
+<meta name="author" content=""></meta>
+
+<title>XSS Showcase</title>
+
+<!-- Bootstrap core CSS -->
+<link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/blog.css}" rel="stylesheet" />
+</head>
+
+<body>
+
+	<div class="blog-masthead">
+		<div class="container">
+			<nav class="blog-nav">
+				<a class="blog-nav-item" href="/">Home</a> 
+				<a class="blog-nav-item" href="/unsecure/addPost">Unsecure Add Post</a>
+				<a class="blog-nav-item" href="/secure/addPost">Secure Add Post</a>
+				<a class="blog-nav-item" href="/antisamy/addPost">AntiSamy Add Post</a>
+			</nav>
+		</div>
+	</div>
+
+	<div class="container">
+
+		<div class="blog-header">
+			<h1 class="blog-title">Sample Blog</h1>
+			<p class="lead blog-description">Showcase of some XSS prevention techniques.</p>
+		</div>
+
+		<div class="row">
+
+			<div class="col-sm-8 blog-main">
+
+				<div class="blog-post">
+					<form  th:object="${post}" method="post">
+						<div class="form-group">
+							<label for="title">Title</label> <input type="text" class="form-control" id="title" name="title" placeholder="Title" th:value="*{title}" />
+						</div>
+						<div class="form-group">
+							<label for="text">Text</label>
+							<textarea id="text" name="text" class="form-control" rows="10" th:value="*{text}"></textarea>
+							<a href="#" onclick="tinyMCE.execCommand('mceToggleEditor', false, 'text');return false;" title="Editor on/off">Editor on/off</a>
+						</div>
+
+
+						<button type="submit" class="btn btn-default">Add Post</button>
+					</form>
+				</div>
+				<!-- /.blog-post -->
+
+
+
+			</div>
+			<!-- /.blog-main -->
+
+			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+				<div class="sidebar-module sidebar-module-inset">
+					<h4>About</h4>
+					<p>This sample should demonstrate the prevention of XSS.</p>
+					<p>
+						The following sample can be used:
+						<code>&lt;script&gt;alert(document.cookie);&lt;/script&gt;</code>
+					</p>
+				</div>
+
+				<div class="sidebar-module">
+					<h4>Links</h4>
+					<ol class="list-unstyled">
+						<li><a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project">OWASP Top 10</a></li>
+						<li><a href="https://www.owasp.org/index.php/Category:OWASP_AntiSamy_Project">AntiSamy</a></li>
+						<li><a href="http://projects.spring.io/spring-boot/">Spring Boot</a></li>
+					</ol>
+				</div>
+			</div>
+			<!-- /.blog-sidebar -->
+
+		</div>
+		<!-- /.row -->
+
+	</div>
+	<!-- /.container -->
+
+	<footer class="blog-footer">
+		<p>
+			Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.
+		</p>
+		<p>
+			<a href="#">Back to top</a>
+		</p>
+	</footer>
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/1.12.0/jquery.min.js"></script>
+
+	<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+	<script>
+		tinymce
+				.init({
+					selector : 'textarea',
+					height : 350,
+					theme : 'modern',
+					plugins : [
+							'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+							'searchreplace wordcount visualblocks visualchars code fullscreen',
+							'insertdatetime media nonbreaking save table contextmenu directionality',
+							'emoticons template paste textcolor colorpicker textpattern imagetools' ],
+					toolbar1 : 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+					toolbar2 : 'print preview media | forecolor backcolor emoticons',
+					extended_valid_elements: '*[*],script[charset|defer|language|src|type]',
+					image_advtab : true,
+					templates : [ {
+						title : 'Test template 1',
+						content : 'Test 1'
+					}, {
+						title : 'Test template 2',
+						content : 'Test 2'
+					} ],
+// 					content_css : [
+// 							'//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+// 							'//www.tinymce.com/css/codepen.min.css' ]
+				});
+	</script>
+</body>
+</html>
