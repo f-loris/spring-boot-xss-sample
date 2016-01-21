@@ -8,3 +8,10 @@ The following frameworks are used:
 * Bootstrap
 * AntiSamy
 * H2 DB
+
+## Running the Application
+
+```
+mvn spring-boot:run
+```
+open localhost:8080
