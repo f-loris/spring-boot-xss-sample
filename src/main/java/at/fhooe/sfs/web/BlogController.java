@@ -26,7 +26,14 @@ public class BlogController {
 	@RequestMapping(value = "/")
 	public ModelAndView index() {
 
-		return new ModelAndView("index", "posts", this.repository.findAll());
+		return new ModelAndView("index", "posts", this.repository.findAllByOrderByIdDesc());
+	}
+
+	@RequestMapping(value = "/deletePost")
+	public RedirectView deletePost(final Long id) {
+
+		this.repository.delete(this.repository.findOne(id));
+		return new RedirectView("/");
 	}
 
 	@RequestMapping(value = { "/unsecure/addPost", "/secure/addPost", "/antisamy/addPost" }, method = RequestMethod.GET)
