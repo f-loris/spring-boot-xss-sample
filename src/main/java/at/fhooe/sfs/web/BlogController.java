@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import at.fhooe.sfs.domain.BlogPost;
 import at.fhooe.sfs.repository.BlogPostRepository;
@@ -35,10 +36,10 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = { "/unsecure/addPost", "/secure/addPost", "/antisamy/addPost" }, method = RequestMethod.POST)
-	public ModelAndView addPost(final BlogPost post) {
+	public RedirectView addPost(final BlogPost post) {
 
 		this.repository.save(post);
-		return this.index();
+		return new RedirectView("/");
 	}
 
 }

@@ -20,11 +20,13 @@
 	<div class="blog-masthead">
 		<div class="container">
 			<nav class="blog-nav">
-				<a class="blog-nav-item" href="/">Home</a> 
+				<a class="blog-nav-item" href="/">Home</a>
 				<a class="blog-nav-item" href="/unsecure/addPost">Unsecure Add Post</a>
 				<a class="blog-nav-item" href="/secure/addPost">Secure Add Post</a>
 				<a class="blog-nav-item" href="/antisamy/addPost">AntiSamy Add Post</a>
+				<a class="blog-nav-item" href="/logout">Logout</a>
 			</nav>
+				
 		</div>
 	</div>
 
@@ -63,7 +65,7 @@
 
 			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
 				<div class="sidebar-module sidebar-module-inset">
-					<h4>About</h4>
+					<h4>Hello <span sec:authentication="name">Anonymous</span></h4>
 					<p>This sample should demonstrate the prevention of XSS.</p>
 					<p>
 						The following sample can be used:

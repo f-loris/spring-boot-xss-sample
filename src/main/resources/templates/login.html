@@ -12,8 +12,8 @@
 <title>XSS Showcase</title>
 
 <!-- Bootstrap core CSS -->
-<link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
-  <link th:href="@{/css/blog.css}" rel="stylesheet"/>
+<link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/blog.css}" rel="stylesheet" />
 </head>
 
 <body>
@@ -21,15 +21,15 @@
 	<div class="blog-masthead">
 		<div class="container">
 			<nav class="blog-nav" sec:authorize="hasRole('ROLE_USER')">
-				<a class="blog-nav-item active" href="/">Home</a>
+				<a class="blog-nav-item" href="/">Home</a>
 				<a class="blog-nav-item" href="/unsecure/addPost">Unsecure Add Post</a>
 				<a class="blog-nav-item" href="/secure/addPost">Secure Add Post</a>
 				<a class="blog-nav-item" href="/antisamy/addPost">AntiSamy Add Post</a>
 				<a class="blog-nav-item" href="/logout">Logout</a>
 			</nav>
 			<nav class="blog-nav" sec:authorize="!hasRole('ROLE_USER')">
-				<a class="blog-nav-item active" href="/">Home</a>
-				<a class="blog-nav-item" href="/login">Login</a>
+				<a class="blog-nav-item" href="/">Home</a>
+				<a class="blog-nav-item active" href="/login">Login</a>
 			</nav>
 				
 			
@@ -44,26 +44,26 @@
 		</div>
 
 		<div class="row">
-		
+
 			<div class="col-sm-8 blog-main">
 
-				<div class="blog-post" th:each="post : ${posts}">
-					<h2 class="blog-post-title" th:utext="${post.title}"></h2>
-					<p class="blog-post-meta">
-						January 1, 2014 by <a href="#">Mark</a>
-					</p>
+				<p th:if="${param.logout}" class="alert">You have been logged out</p>
+				<p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
+				<h2>Login with Username and Password</h2>
+				<form name="form" th:action="@{/login}" action="/login" method="POST">
+					<fieldset>
+						<input type="text" name="username" value="" placeholder="Username" /> <input type="password" name="password" placeholder="Password" />
+					</fieldset>
+					<input type="submit" id="login" value="Login" class="btn btn-primary" />
+				</form>
 
-					<p th:utext="${post.text}">text</p>
-				</div>
-				<!-- /.blog-post -->
 
-			
+
 
 			</div>
 			<!-- /.blog-main -->
 
 			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-			
 				<div class="sidebar-module sidebar-module-inset">
 					<h4>Hello <span sec:authentication="name">Anonymous</span></h4>
 					<p>This sample should demonstrate the prevention of XSS.</p>
