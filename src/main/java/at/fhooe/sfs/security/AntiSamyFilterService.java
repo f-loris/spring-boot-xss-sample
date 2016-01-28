@@ -35,7 +35,7 @@ public class AntiSamyFilterService implements IXssFilterService {
 			if (cr.getNumberOfErrors() > 0 && LOG.isDebugEnabled()) {
 
 				final StringBuilder buffer = new StringBuilder("antisamy encountered problem with input:");
-				buffer.append(StringEscapeUtils.escapeHtml3(potentiallyDirtyParameter));
+				buffer.append(StringEscapeUtils.escapeHtml4(potentiallyDirtyParameter));
 				buffer.append("\n error");
 				buffer.append(cr.getErrorMessages());
 
@@ -46,7 +46,7 @@ public class AntiSamyFilterService implements IXssFilterService {
 		} catch (final Exception e) {
 
 			LOG.error("Error while xss processing " + e.getMessage()); //do not write stacktrace
-			return potentiallyDirtyParameter;
+			return StringEscapeUtils.escapeHtml4(potentiallyDirtyParameter); // secure fallback
 		}
 	}
 
