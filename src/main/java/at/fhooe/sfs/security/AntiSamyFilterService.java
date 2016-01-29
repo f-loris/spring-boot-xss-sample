@@ -32,15 +32,8 @@ public class AntiSamyFilterService implements IXssFilterService {
 		}
 		try {
 			final CleanResults cr = this.antiSamy.scan(potentiallyDirtyParameter);
-			if (cr.getNumberOfErrors() > 0 && LOG.isDebugEnabled()) {
-
-				final StringBuilder buffer = new StringBuilder("antisamy encountered problem with input:");
-				buffer.append(StringEscapeUtils.escapeHtml4(potentiallyDirtyParameter));
-				buffer.append("\n error");
-				buffer.append(cr.getErrorMessages());
-
-				LOG.debug(buffer.toString());
-
+			if (cr.getNumberOfErrors() > 0) {
+				this.printDebug(cr, potentiallyDirtyParameter);
 			}
 			return cr.getCleanHTML();
 		} catch (final Exception e) {
@@ -50,4 +43,12 @@ public class AntiSamyFilterService implements IXssFilterService {
 		}
 	}
 
+	private void printDebug(final CleanResults cr, final String potentiallyDirtyParameter) {
+		final StringBuilder builder = new StringBuilder("antisamy encountered problem with input:");
+		builder.append(StringEscapeUtils.escapeHtml4(potentiallyDirtyParameter));
+		builder.append("\n error");
+		builder.append(cr.getErrorMessages());
+
+		LOG.info(builder.toString());
+	}
 }
